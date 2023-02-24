@@ -15,13 +15,43 @@ public class FirstController {
                             @RequestParam(value = "surname", required = false) String surname,
                             Model model) {
 //        System.out.println("Hello " + name + " " + surname);
-model.addAttribute("message","Hello " + name + " " + surname);
+        model.addAttribute("message", "Hello " + name + " " + surname);
+
         return "first/hello";
     }
 
     @GetMapping("/goodbye")
     public String goodByePage() {
         return "first/goodbye";
+    }
+
+    @GetMapping("/calculator")
+    public String calculator(@RequestParam("a") int a,
+                             @RequestParam("b") int b,
+                             @RequestParam("action") String action,
+                             Model model) {
+        double result;
+
+        switch (action) {
+            case "multiplication":
+                result = a*b;
+                break;
+            case "addition":
+                result = a+b;
+                break;
+            case "subtraction":
+                result = a-b;
+                break;
+            case "division":
+                result = a/(double)b;
+                break;
+            default: result=0;
+            break;
+        }
+        model.addAttribute("operation", "Result of "
+                + action+ " with number "+ a +  " and "+b+" is " +  result);
+
+        return "first/calculator";
     }
 
 }
